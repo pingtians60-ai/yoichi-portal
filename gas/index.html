@@ -5494,15 +5494,30 @@ class Store {
       // Sync staff
       if (resData.staff) {
         this.data.staffList = resData.staff.map(s => {
-          const progs = this.parseProgram(s.program);
+          const existing = this.data.staffList.find(e => e.id === s.id);
+          
+          // プログラムの安全なマージ:
+          // 1. GASから有効なプログラムが返ってきた場合はそれを採用
+          // 2. GASからの値が未定義/空/「なし」で、ローカルに有効なプログラム値がある場合はローカル値を保護
+          let rawProg = s.program;
+          if (!rawProg || rawProg === 'なし') {
+            if (existing && existing.program && existing.program !== 'なし') {
+              rawProg = existing.program;
+            }
+          }
+          const progs = this.parseProgram(rawProg);
+          const finalProgram = progs.length > 0 ? progs.join(', ') : (existing && existing.program ? existing.program : 'なし');
+
           return {
             id: s.id,
             name: s.name,
             category: s.category,
             role: s.role,
             avatar: s.avatar || s.name.charAt(0),
-            attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) ? String(s.attendance_number).trim() : '',
-            program: progs.length > 0 ? progs.join(', ') : 'なし'
+            attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) 
+              ? String(s.attendance_number).trim() 
+              : (existing ? existing.attendance_number : ''),
+            program: finalProgram
           };
         });
       }
@@ -5607,15 +5622,24 @@ class Store {
 
       if (staffRes.data) {
         this.data.staffList = staffRes.data.map(s => {
-          const progs = this.parseProgram(s.program);
+          const existing = this.data.staffList.find(e => e.id === s.id);
+          let rawProg = s.program;
+          if (!rawProg || rawProg === 'なし') {
+            if (existing && existing.program && existing.program !== 'なし') {
+              rawProg = existing.program;
+            }
+          }
+          const progs = this.parseProgram(rawProg);
+          const finalProgram = progs.length > 0 ? progs.join(', ') : (existing && existing.program ? existing.program : 'なし');
+
           return {
             id: s.id,
             name: s.name,
             category: s.category,
             role: s.role,
             avatar: s.avatar || s.name.charAt(0),
-            attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) ? String(s.attendance_number).trim() : '',
-            program: progs.length > 0 ? progs.join(', ') : 'なし'
+            attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) ? String(s.attendance_number).trim() : (existing ? existing.attendance_number : ''),
+            program: finalProgram
           };
         });
       }
