@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>夜市 | PORTAL</title>
+  <meta name="description" content="学生団体「夜市」の活動スケジュールとイベント別シフト表を一元管理するポータルシステム">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/event_shift.css">
+</head>
+<body>
+
+  <!-- Opening Animation Screen -->
+  <div id="opening-screen" class="opening-screen">
+    <div class="opening-glows">
+      <div class="op-glow-1"></div>
+      <div class="op-glow-2"></div>
+    </div>
+    <div class="opening-fireworks">
+      <div class="firework fw-1">
+        <div class="fw-center"></div>
+        <div class="fw-particle p1"></div>
+        <div class="fw-particle p2"></div>
+        <div class="fw-particle p3"></div>
+        <div class="fw-particle p4"></div>
+        <div class="fw-particle p5"></div>
+        <div class="fw-particle p6"></div>
+        <div class="fw-particle p7"></div>
+        <div class="fw-particle p8"></div>
+        <div class="fw-particle p9"></div>
+        <div class="fw-particle p10"></div>
+        <div class="fw-particle p11"></div>
+        <div class="fw-particle p12"></div>
+      </div>
+      <div class="firework fw-2">
+        <div class="fw-center"></div>
+        <div class="fw-particle p1"></div>
+        <div class="fw-particle p2"></div>
+        <div class="fw-particle p3"></div>
+        <div class="fw-particle p4"></div>
+        <div class="fw-particle p5"></div>
+        <div class="fw-particle p6"></div>
+        <div class="fw-particle p7"></div>
+        <div class="fw-particle p8"></div>
+        <div class="fw-particle p9"></div>
+        <div class="fw-particle p10"></div>
+        <div class="fw-particle p11"></div>
+        <div class="fw-particle p12"></div>
+      </div>
+      <div class="firework fw-3">
+        <div class="fw-center"></div>
+        <div class="fw-particle p1"></div>
+        <div class="fw-particle p2"></div>
+        <div class="fw-particle p3"></div>
+        <div class="fw-particle p4"></div>
+        <div class="fw-particle p5"></div>
+        <div class="fw-particle p6"></div>
+        <div class="fw-particle p7"></div>
+        <div class="fw-particle p8"></div>
+        <div class="fw-particle p9"></div>
+        <div class="fw-particle p10"></div>
+        <div class="fw-particle p11"></div>
+        <div class="fw-particle p12"></div>
+      </div>
+    </div>
+    <div class="opening-lanterns">
+      <div class="opening-lantern lantern-1"></div>
+      <div class="opening-lantern lantern-2"></div>
+      <div class="opening-lantern lantern-3"></div>
+      <div class="opening-lantern lantern-4"></div>
+      <div class="opening-lantern lantern-5"></div>
+      <div class="opening-lantern lantern-6"></div>
+      <div class="opening-lantern lantern-7"></div>
+      <div class="opening-lantern lantern-8"></div>
+      <div class="opening-lantern lantern-9"></div>
+      <div class="opening-lantern lantern-10"></div>
+    </div>
+    <div class="opening-content">
+      <div class="opening-logo">
+        <div class="opening-icon-wrapper">
+          <img src="images/portal-icon.png" alt="Yoichi" class="opening-icon-img">
+        </div>
+        <h1 class="opening-title"><span class="char-1">夜</span><span class="char-2">市</span></h1>
+      </div>
+      <p class="opening-subtitle">PORTAL</p>
+      <div class="opening-loader">
+        <div class="opening-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Screen Overlay -->
+  <div id="login-screen" class="login-screen" style="display: none;">
+    <div class="login-glows">
+      <div class="op-glow-1"></div>
+      <div class="op-glow-2"></div>
+    </div>
+    <!-- Floating warm paper lanterns in login background -->
+    <div class="opening-lanterns">
+      <div class="opening-lantern lantern-1"></div>
+      <div class="opening-lantern lantern-2"></div>
+      <div class="opening-lantern lantern-3"></div>
+      <div class="opening-lantern lantern-4"></div>
+      <div class="opening-lantern lantern-5"></div>
+    </div>
+    <div class="login-box-wrapper">
+      <div class="card login-card">
+        <div class="login-logo-area">
+          <img src="images/portal-icon.png" alt="Yoichi" class="login-logo-img">
+          <h2>夜市 <span style="font-weight: 500; font-size: 1.1rem; color: var(--text-muted);">Portal</span></h2>
+        </div>
+        <p class="login-desc">背番号を入力してログインしてください。</p>
+        <form id="form-login">
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <input type="text" id="login-attendance-number" class="form-control" placeholder="背番号を入力" required inputmode="numeric" pattern="[0-9]*" autocomplete="off" style="text-align: center; font-size: 1.2rem; letter-spacing: 0.1em; padding: 0.75rem;">
+          </div>
+          <button type="submit" class="btn btn-primary" style="padding: 0.75rem; font-size: 1rem; width: 100%;">
+            ログイン
+          </button>
+        </form>
+        <div id="login-error-msg" class="login-error" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Ambient Animated Background (Aurora Mesh & Floating Glows) -->
+  <div class="ambient-background">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-particle particle-1"></div>
+    <div class="ambient-particle particle-2"></div>
+    <div class="ambient-particle particle-3"></div>
+    <div class="ambient-particle particle-4"></div>
+    <div class="ambient-particle particle-5"></div>
+    <div class="ambient-particle particle-6"></div>
+    
+    <!-- Loop Background Fireworks -->
+    <div class="bg-fireworks">
+      <div class="firework bg-fw-1">
+        <div class="fw-center"></div>
+        <div class="fw-particle p1"></div>
+        <div class="fw-particle p2"></div>
+        <div class="fw-particle p3"></div>
+        <div class="fw-particle p4"></div>
+        <div class="fw-particle p5"></div>
+        <div class="fw-particle p6"></div>
+        <div class="fw-particle p7"></div>
+        <div class="fw-particle p8"></div>
+        <div class="fw-particle p9"></div>
+        <div class="fw-particle p10"></div>
+        <div class="fw-particle p11"></div>
+        <div class="fw-particle p12"></div>
+      </div>
+      <div class="firework bg-fw-2">
+        <div class="fw-center"></div>
+        <div class="fw-particle p1"></div>
+        <div class="fw-particle p2"></div>
+        <div class="fw-particle p3"></div>
+        <div class="fw-particle p4"></div>
+        <div class="fw-particle p5"></div>
+        <div class="fw-particle p6"></div>
+        <div class="fw-particle p7"></div>
+        <div class="fw-particle p8"></div>
+        <div class="fw-particle p9"></div>
+        <div class="fw-particle p10"></div>
+        <div class="fw-particle p11"></div>
+        <div class="fw-particle p12"></div>
+      </div>
+      <div class="firework bg-fw-3">
+        <div class="fw-center"></div>
+        <div class="fw-particle p1"></div>
+        <div class="fw-particle p2"></div>
+        <div class="fw-particle p3"></div>
+        <div class="fw-particle p4"></div>
+        <div class="fw-particle p5"></div>
+        <div class="fw-particle p6"></div>
+        <div class="fw-particle p7"></div>
+        <div class="fw-particle p8"></div>
+        <div class="fw-particle p9"></div>
+        <div class="fw-particle p10"></div>
+        <div class="fw-particle p11"></div>
+        <div class="fw-particle p12"></div>
+      </div>
+    </div>
+  </div>
+  <div class="ambient-grid-overlay"></div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="brand-icon-wrapper">
+            <img src="images/portal-icon.png" alt="Yoichi" class="brand-icon-img">
+          </div>
+          <span>夜市</span>
+          <span class="brand-badge" style="background-color: #fef3c7; color: #b45309;">Portal</span>
+        </div>
+        <button class="btn-icon-only btn-close-sidebar" id="btn-close-sidebar" title="メニューを閉じる" aria-label="メニューを閉じる">
+          ✕
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">メインメニュー</div>
+        
+        <div class="nav-item active" data-tab="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>ホーム</span>
+        </div>
+
+        <div class="nav-item" data-tab="schedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>スケジュール管理</span>
+        </div>
+
+        <div class="nav-item" data-tab="event-shift">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>イベントシフト</span>
+        </div>
+
+        <div class="nav-section-title" style="margin-top: 1rem;">管理・設定</div>
+
+        <div class="nav-item" data-tab="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>メンバー・設定</span>
+        </div>
+
+        <div class="nav-item" data-tab="shops">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>出店・出演者</span>
+        </div>
+
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-card" style="position: relative; display: flex; align-items: center; width: 100%;">
+          <div class="user-avatar" id="sidebar-user-avatar">管</div>
+          <div class="user-info" style="flex: 1; min-width: 0;">
+            <div class="user-name" id="sidebar-user-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">管理者</div>
+            <div class="user-role" id="sidebar-user-role" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Core</div>
+          </div>
+          <button class="btn-icon-only" id="btn-logout" title="ログアウト" style="background: none; border: none; font-size: 1.1rem; color: var(--text-muted); cursor: pointer; padding: 0.25rem 0.5rem; border-radius: var(--radius-md); transition: color 0.2s, background-color 0.2s; margin-left: 0.5rem; display: flex; align-items: center; justify-content: center;">
+            🚪
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-title-area">
+          <button class="btn-icon-only btn-hamburger" id="btn-toggle-sidebar" title="メニューを開く" aria-label="メニューを開く">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <h1 class="page-title" id="header-page-title">ホーム</h1>
+        </div>
+
+        <div class="header-search-wrapper">
+          <input type="text" id="global-search-input" class="form-control" placeholder="予定・キーワードを検索..." style="border-radius: var(--radius-full); font-size: 0.8rem; padding: 0.45rem 1rem;">
+        </div>
+
+        <div class="header-actions">
+          <!-- テーマ切替 -->
+          <button class="btn-icon-only" id="btn-toggle-theme" title="テーマ切り替え">
+            🌙
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic App Body -->
+      <div class="app-body">
+        
+        <!-- ========================================================
+             1. Dashboard View
+             ======================================================== -->
+        <section class="view-section active" id="view-dashboard">
+          
+          <!-- Welcome & Date Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 style="font-size: 1.35rem; font-weight: 800;" id="dash-today-title">2026年8月18日</h2>
+            </div>
+            <div style="display: flex; gap: 0.6rem;">
+              <button class="btn btn-primary" id="dash-btn-quick-event">
+                予定を追加
+              </button>
+              <button class="btn btn-secondary" id="dash-btn-quick-event-shift">
+                イベントシフトを開く
+              </button>
+            </div>
+          </div>
+
+          <!-- Key Metrics / Stats -->
+          <div class="dashboard-stats-grid">
+            <div class="card stat-card">
+              <div class="stat-icon" style="background-color: var(--primary-50); color: var(--primary-600);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">本日の活動予定</div>
+                <div class="stat-value" id="dash-stat-today">0 件</div>
+                <div class="stat-subtext">MTG・企画準備・締切</div>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-icon" style="background-color: var(--success-bg); color: var(--success-text);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">今月の総イベント数</div>
+                <div class="stat-value" id="dash-stat-month">0 件</div>
+                <div class="stat-subtext">全体共有スケジュール</div>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-icon" style="background-color: var(--warning-bg); color: var(--warning-text);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">登録メンバー数</div>
+                <div class="stat-value" id="dash-stat-staff">0 名</div>
+                <div class="stat-subtext">Core / Chief / Assistant / Member</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Dashboard Split Grid -->
+          <div class="dashboard-main-grid">
+            
+            <!-- Left: Today's Events Timeline -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  本日のスケジュールと参加メンバー
+                </div>
+              </div>
+              <div id="dash-today-events-container" class="agenda-list">
+                <!-- JSで動的生成 -->
+              </div>
+            </div>
+
+            <!-- Right: Upcoming Events -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  直近・今後の予定
+                </div>
+              </div>
+              <div id="dash-upcoming-events-container" class="agenda-list">
+                <!-- JSで動的生成 -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Member Participation Summary -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                メンバー別の参加予定状況
+              </div>
+            </div>
+            <div id="dash-member-stats-container">
+              <!-- JSで動的生成 -->
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================================
+             2. Schedule & Calendar View
+             ======================================================== -->
+        <section class="view-section" id="view-schedule">
+          
+          <div class="calendar-wrapper">
+            <!-- Controls Toolbar -->
+            <div class="calendar-controls">
+              <div class="calendar-nav-group">
+                <button class="btn btn-secondary btn-sm" id="cal-today-btn">今日</button>
+                <button class="btn-icon-only" id="cal-prev-btn" title="前へ">◀</button>
+                <button class="btn-icon-only" id="cal-next-btn" title="次へ">▶</button>
+                <div class="current-period-title" id="cal-period-title">2026年 8月</div>
+              </div>
+
+              <!-- View Switcher -->
+              <div class="view-switcher">
+                <button class="view-btn active" data-view="month">月</button>
+                <button class="view-btn" data-view="week">週</button>
+                <button class="view-btn" data-view="day">日</button>
+                <button class="view-btn" data-view="agenda">リスト</button>
+              </div>
+
+              <!-- Filters & Action -->
+              <div class="filter-group">
+                <select id="cal-filter-category" class="form-select" style="width: auto; font-size: 0.8rem; padding: 0.35rem 0.65rem;">
+                  <option value="all">すべての種別</option>
+                </select>
+
+                <select id="cal-filter-member" class="form-select" style="width: auto; font-size: 0.8rem; padding: 0.35rem 0.65rem;">
+                  <option value="all">すべてのメンバー</option>
+                </select>
+
+                <button class="btn btn-primary btn-sm" id="btn-add-event">
+                  予定を登録
+                </button>
+              </div>
+            </div>
+
+            <!-- Calendar Dynamic Container -->
+            <div id="calendar-view-container" style="flex: 1; display: flex; flex-direction: column;">
+              <!-- Month / Week / Day / Agenda JS Render -->
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================================
+             3. Event Shift View (イベントごとのシフト管理)
+             ======================================================== -->
+        <section class="view-section" id="view-event-shift">
+          
+          <div class="event-shift-wrapper">
+            <!-- Controls Toolbar -->
+            <div class="event-shift-controls">
+              <div class="event-selector-group">
+                <span style="font-weight: 700; font-size: 0.88rem;">対象イベント:</span>
+                <select id="event-shift-select" class="form-select" style="width: auto; min-width: 260px; font-weight: 700;">
+                  <!-- JSで動的生成 -->
+                </select>
+              </div>
+
+              <div class="event-shift-actions">
+                <button class="btn btn-secondary btn-sm" id="btn-edit-event-members" title="このイベントの参加スタッフを選択・変更">
+                  👥 参加スタッフ選択
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btn-edit-shift-struct" title="役割・時間帯枠の設定">
+                  役割・時間枠設定
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btn-auto-assign-event-shift" title="メンバーを自動割り振り">
+                  自動割り当て
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btn-clear-event-shift" title="シフトをリセット">
+                  クリア
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btn-export-event-shift-csv" title="CSVダウンロード">
+                  CSV
+                </button>
+                <button class="btn btn-primary btn-sm" id="btn-print-event-shift" title="印刷レイアウト">
+                  印刷
+                </button>
+              </div>
+            </div>
+
+            <!-- Event Shift View Tabs & Filter -->
+            <div class="shift-view-tabs" style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+              <button class="btn btn-outline btn-sm active" id="tab-btn-matrix-shift" data-shift-view="matrix">
+                📊 全体シフト表 (マトリクス)
+              </button>
+              <button class="btn btn-outline btn-sm" id="tab-btn-personal-shift" data-shift-view="personal">
+                👤 個人別シフト表 (マイシフト)
+              </button>
+              
+              <div id="personal-shift-member-filter-wrapper" style="display: none; margin-left: auto; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">表示対象:</span>
+                <select id="personal-shift-member-select" class="form-select" style="font-size: 0.82rem; width: auto; font-weight: 600;">
+                  <!-- JSで動的生成 -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Event Meta Info Banner -->
+            <div id="event-shift-banner" class="event-meta-banner">
+              <!-- JSで動的生成 -->
+            </div>
+
+            <!-- 1. Matrix / Time Table (全体) -->
+            <div class="event-shift-table-card" id="event-shift-grid-container">
+              <!-- JSで動的生成 -->
+            </div>
+
+            <!-- 2. Personal Shift Timeline & Cards (個人別) -->
+            <div id="event-shift-personal-container" style="display: none;">
+              <!-- JSで動的生成 -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================================
+             4. Past Shops / Vendors View (過去の出店者一覧)
+             ======================================================== -->
+        <section class="view-section" id="view-shops">
+          
+          <div class="card">
+            <div class="card-header" style="flex-wrap: wrap; gap: 1rem;">
+              <div class="card-title">過去の出店者一覧</div>
+              
+              <!-- Exhibitor Period Filters -->
+              <div class="shop-filter-tabs" style="display: flex; gap: 0.4rem; margin-left: auto; margin-right: 1rem;">
+                <button class="btn btn-outline btn-sm active" data-shop-filter="all">すべて (<span id="shop-count-all">0</span>)</button>
+                <button class="btn btn-outline btn-sm" data-shop-filter="1month">過去1ヶ月 (<span id="shop-count-1month">0</span>)</button>
+                <button class="btn btn-outline btn-sm" data-shop-filter="1year">過去1年 (<span id="shop-count-1year">0</span>)</button>
+                <button class="btn btn-outline btn-sm" data-shop-filter="older">それ以前/他 (<span id="shop-count-older">0</span>)</button>
+              </div>
+
+              <button class="btn btn-primary btn-sm" id="btn-add-shop">
+                出店者を追加
+              </button>
+            </div>
+            
+            <div class="shops-grid" id="shops-grid-container">
+              <!-- JSで動的生成 -->
+            </div>
+          </div>
+
+          <!-- Performers List Card (出店者一覧の下に配置) -->
+          <div class="card" style="margin-top: 1.5rem;">
+            <div class="card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+              <div class="card-title">
+                出演者一覧（ステージ・パフォーマンス）
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-add-performer">
+                出演者を追加
+              </button>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                <thead>
+                  <tr style="background-color: var(--bg-tertiary); text-align: left; border-bottom: 1px solid var(--border-subtle);">
+                    <th style="padding: 0.65rem 1rem;">出演者・団体名</th>
+                    <th style="padding: 0.65rem 1rem;">ジャンル</th>
+                    <th style="padding: 0.65rem 1rem;">出演イベント / 日時</th>
+                    <th style="padding: 0.65rem 1rem;">メールアドレス</th>
+                    <th style="padding: 0.65rem 1rem;">電話番号</th>
+                    <th style="padding: 0.65rem 1rem;">連絡先・メモ</th>
+                    <th id="performer-th-action" style="padding: 0.65rem 1rem; text-align: right;">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="performer-table-body">
+                  <!-- JSで動的生成 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+
+
+        <!-- ========================================================
+             4. Members & System Settings View
+             ======================================================== -->
+        <section class="view-section" id="view-settings">
+          
+          <!-- Staff List Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                メンバー名簿
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-add-staff">
+                メンバー追加
+              </button>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                <thead>
+                  <tr style="background-color: var(--bg-tertiary); text-align: left; border-bottom: 1px solid var(--border-subtle);">
+                    <th style="padding: 0.65rem 1rem;">名前</th>
+                    <th style="padding: 0.65rem 1rem;">カテゴリー</th>
+                    <th style="padding: 0.65rem 1rem;">プログラム</th>
+                    <th id="staff-th-role" style="padding: 0.65rem 1rem; display: none;">権限</th>
+                    <th id="staff-th-action" style="padding: 0.65rem 1rem; text-align: right;">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="staff-table-body">
+                  <!-- JSで動的生成 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+        <div class="bottom-nav-item active" data-tab="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>ホーム</span>
+        </div>
+        <div class="bottom-nav-item" data-tab="schedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>予定</span>
+        </div>
+        <div class="bottom-nav-item" data-tab="event-shift">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>シフト</span>
+        </div>
+        <div class="bottom-nav-item" data-tab="shops">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>出店・出演</span>
+        </div>
+        <div class="bottom-nav-item" data-tab="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>名簿・設定</span>
+        </div>
+      </nav>
+
+    </main>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  </div>
+
+  <!-- ========================================================
+       Modals
+       ======================================================== -->
+
+  <!-- 1. Event Add/Edit Modal -->
+  <div class="modal-backdrop" id="modal-event">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-event-title">予定の登録</h3>
+        <button class="btn-icon-only btn-close-modal">✕</button>
+      </div>
+      <form id="form-event">
+        <div class="modal-body">
+          <input type="hidden" id="event-id">
+
+          <div class="form-group">
+            <label class="form-label">タイトル <span class="required">*</span></label>
+            <input type="text" id="event-title" class="form-control" placeholder="例: 全体定例MTG、企画準備会" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">種別・カテゴリ</label>
+            <input type="text" id="event-category" class="form-control" placeholder="例: MTG、企画、イベント、提出期限など">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">日付 <span class="required">*</span></label>
+            <input type="date" id="event-date" class="form-control" required>
+          </div>
+
+          <div style="margin-bottom: 0.75rem;">
+            <label style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer;">
+              <input type="checkbox" id="event-allday">
+              <span>終日の予定</span>
+            </label>
+          </div>
+
+          <div class="form-row" id="event-time-group">
+            <div class="form-group">
+              <label class="form-label">開始時間</label>
+              <input type="time" id="event-start-time" class="form-control" value="18:00">
+            </div>
+            <div class="form-group">
+              <label class="form-label">終了時間</label>
+              <input type="time" id="event-end-time" class="form-control" value="19:30">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <label class="form-label" style="margin-bottom: 0;">参加メンバー</label>
+              <span id="event-members-count" class="badge badge-primary" style="font-size: 0.75rem;">0名選択中</span>
+            </div>
+            
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-open-member-picker" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.55rem 1rem; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">
+              <span>👥</span>
+              <span>参加メンバーを選択する</span>
+            </button>
+
+            <!-- 選択中メンバーのプレビュータグ表示エリア -->
+            <div id="event-selected-members-preview" class="event-selected-members-preview">
+              <!-- JSで動的生成 -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">詳細メモ・備考</label>
+            <textarea id="event-notes" class="form-control" placeholder="場所・URL・持ち物・アジェンダなど"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" id="btn-jump-event-shift" style="margin-right: auto; display: none;">
+            シフト表を開く
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" id="btn-delete-event" style="display: none;">削除</button>
+          <button type="button" class="btn btn-secondary btn-close-modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 1.5. Large Screen Member Picker Modal -->
+  <div class="modal-backdrop" id="modal-member-picker">
+    <div class="modal-box modal-lg" style="max-width: 840px; width: 95%;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <h3 class="modal-title" id="modal-member-picker-title">👥 参加メンバーの選択</h3>
+          <span id="picker-selected-count-badge" class="badge badge-primary" style="font-size: 0.78rem;">0名選択中</span>
+        </div>
+        <button type="button" class="btn-icon-only" id="btn-close-member-picker">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; overflow: hidden; max-height: calc(88vh - 130px);">
+        <!-- ツールバー：検索 ＆ 一括選択・解除 -->
+        <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; justify-content: space-between;">
+          <div style="display: flex; gap: 0.5rem; align-items: center; flex: 1; min-width: 220px;">
+            <input type="text" id="picker-search-input" class="form-control" placeholder="🔍 名前や背番号で検索..." style="font-size: 0.85rem; padding: 0.45rem 0.75rem;">
+          </div>
+          <div style="display: flex; gap: 0.4rem; align-items: center;" id="picker-bulk-actions">
+            <button type="button" class="btn btn-secondary btn-sm" id="picker-btn-select-all" style="padding: 0.35rem 0.75rem; font-size: 0.78rem; font-weight: 600;">全員選択</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="picker-btn-clear-all" style="padding: 0.35rem 0.75rem; font-size: 0.78rem; font-weight: 600;">全解除</button>
+          </div>
+        </div>
+
+        <!-- カテゴリー絞り込みタブ -->
+        <div id="picker-category-filters" style="display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center;">
+          <!-- JSで動的生成 -->
+        </div>
+
+        <!-- メンバー大画面カード一覧 -->
+        <div id="picker-members-grid" class="picker-members-grid" style="flex: 1; overflow-y: auto; padding: 0.2rem 0.2rem 0.5rem 0.2rem;">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+        <span id="picker-footer-info" style="font-size: 0.82rem; color: var(--text-muted);">
+          クリックで選択・解除できます
+        </span>
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" class="btn btn-secondary" id="picker-btn-cancel">キャンセル</button>
+          <button type="button" class="btn btn-primary" id="picker-btn-confirm">
+            <span>決定（このメンバーで確定）</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Event Shift Structure Modal (Roles & Time Slots) -->
+  <div class="modal-backdrop" id="modal-event-shift-struct">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">イベントシフト構成の設定</h3>
+        <button class="btn-icon-only btn-close-modal">✕</button>
+      </div>
+      <form id="form-event-shift-struct">
+        <div class="modal-body" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;">
+          
+          <!-- Roles Config -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="font-size: 0.9rem;">役割・ポジション (目標人数)</strong>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-add-role-row">＋ 役割追加</button>
+            </div>
+            <div id="struct-roles-container">
+              <!-- JSで動的生成 -->
+            </div>
+          </div>
+
+          <!-- Time Slots Config -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="font-size: 0.9rem;">時間枠スロット</strong>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-add-slot-row">＋ 時間枠追加</button>
+            </div>
+            <div id="struct-slots-container">
+              <!-- JSで動的生成 -->
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close-modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">構成を保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Staff Add/Edit Modal -->
+  <div class="modal-backdrop" id="modal-staff">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-staff-title">メンバー情報</h3>
+        <button class="btn-icon-only btn-close-modal">✕</button>
+      </div>
+      <form id="form-staff">
+        <div class="modal-body">
+          <input type="hidden" id="staff-id">
+
+          <div class="form-group">
+            <label class="form-label">氏名 <span class="required">*</span></label>
+            <input type="text" id="staff-name" class="form-control" placeholder="例: 山田 太郎" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">背番号 <span class="required">*</span></label>
+            <input type="text" id="staff-attendance-number" class="form-control" placeholder="例: 12" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">カテゴリー <span class="required">*</span></label>
+            <select id="staff-category" class="form-select" required>
+              <option value="Core">Core</option>
+              <option value="Chief">Chief</option>
+              <option value="Assistant">Assistant</option>
+              <option value="Member">Member</option>
+              <option value="Beginner">Beginner</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">プログラム (複数選択可)</label>
+            <div class="staff-program-checkbox-list" id="staff-program-checkbox-list">
+              <label class="program-checkbox-label">
+                <input type="checkbox" name="staff_program" value="夜市・朝市">
+                <span class="badge badge-prog-yoichi" style="font-weight:700;">夜市・朝市</span>
+              </label>
+              <label class="program-checkbox-label">
+                <input type="checkbox" name="staff_program" value="FIZZ">
+                <span class="badge badge-prog-fizz" style="font-weight:700;">FIZZ</span>
+              </label>
+              <label class="program-checkbox-label">
+                <input type="checkbox" name="staff_program" value="TAKE ACTION">
+                <span class="badge badge-prog-takeaction" style="font-weight:700;">TAKE ACTION</span>
+              </label>
+              <label class="program-checkbox-label">
+                <input type="checkbox" name="staff_program" value="総務">
+                <span class="badge badge-prog-soumu" style="font-weight:700;">総務</span>
+              </label>
+              <label class="program-checkbox-label">
+                <input type="checkbox" name="staff_program" value="マーケティング">
+                <span class="badge badge-prog-marketing" style="font-weight:700;">マーケティング</span>
+              </label>
+            </div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.35rem;">
+              ※チェックを入れたプログラムに所属します（未選択時は「なし」）
+            </div>
+          </div>
+          <div class="form-group" id="staff-role-group" style="display: none; margin-top: 1rem;">
+            <label class="form-label">権限 (管理者のみ設定可能)</label>
+            <select id="staff-role" class="form-select">
+              <option value="staff">メンバー</option>
+              <option value="manager">幹部・管理者 (予定作成・編集権限)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm" id="btn-delete-staff" style="margin-right: auto; display: none;">削除</button>
+          <button type="button" class="btn btn-secondary btn-close-modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Shop Add/Edit Modal -->
+  <div class="modal-backdrop" id="modal-shop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-shop-title">出店者情報</h3>
+        <button class="btn-icon-only btn-close-modal">✕</button>
+      </div>
+      <form id="form-shop">
+        <div class="modal-body">
+          <input type="hidden" id="shop-id">
+
+          <div class="form-group">
+            <label class="form-label">店舗名・団体名 <span class="required">*</span></label>
+            <input type="text" id="shop-name" class="form-control" placeholder="例: たこ焼き 八兵衛" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">ジャンル・カテゴリ <span class="required">*</span></label>
+              <input type="text" id="shop-category" class="form-control" placeholder="例: 飲食、物販、ワークショップなど" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">出店イベント名</label>
+              <input type="text" id="shop-event" class="form-control" placeholder="例: 2026年 夏祭り">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">出店日 (期間分類用)</label>
+              <input type="date" id="shop-event-date" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">メールアドレス</label>
+              <input type="email" id="shop-email" class="form-control" placeholder="例: shop@example.com">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">電話番号</label>
+              <input type="tel" id="shop-phone" class="form-control" placeholder="例: 090-1234-5678">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">その他連絡先・SNS</label>
+            <input type="text" id="shop-contact" class="form-control" placeholder="例: Instagram: @username, LINE公式など">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">出店内容・紹介メモ</label>
+            <textarea id="shop-desc" class="form-control" placeholder="販売商品や当日の様子、メモなど" style="height: 100px;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm" id="btn-delete-shop" style="margin-right: auto; display: none;">削除</button>
+          <button type="button" class="btn btn-secondary btn-close-modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add/Edit Performer -->
+  <div class="modal-backdrop" id="modal-performer" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-performer-title">出演者の追加</h3>
+        <button class="btn-icon-only btn-close-modal" title="閉じる">✕</button>
+      </div>
+      <form id="form-performer">
+        <div class="modal-body">
+          <input type="hidden" id="performer-id">
+
+          <div class="form-group">
+            <label class="form-label">出演者名・グループ名 <span class="required">*</span></label>
+            <input type="text" id="performer-name" class="form-control" placeholder="例: 和太鼓 響, DJ NIGHT, ダンスチームXYZ" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">出演ジャンル <span class="required">*</span></label>
+              <input type="text" id="performer-genre" class="form-control" placeholder="例: 音楽・ライブ, ダンス, 和太鼓, 大道芸" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">出演イベント名</label>
+              <input type="text" id="performer-event" class="form-control" placeholder="例: 夜市 8月祭ステージ">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">出演日・ステージ時間枠</label>
+              <input type="text" id="performer-date" class="form-control" placeholder="例: 2026-08-25 17:30〜18:00">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">メールアドレス</label>
+              <input type="email" id="performer-email" class="form-control" placeholder="例: artist@example.com">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">電話番号</label>
+              <input type="tel" id="performer-phone" class="form-control" placeholder="例: 090-9876-5432">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">その他連絡先 / SNS</label>
+            <input type="text" id="performer-contact" class="form-control" placeholder="例: Instagram: @artist_group, 担当マネージャー連絡先など">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">備考・機材・控室メモ</label>
+            <textarea id="performer-notes" class="form-control" placeholder="マイク本数、音源持ち込み、リハーサル時間など" style="height: 90px;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm" id="btn-delete-performer" style="margin-right: auto; display: none;">削除</button>
+          <button type="button" class="btn btn-secondary btn-close-modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/schedule.js"></script>
+  <script src="js/event_shift.js"></script>
+  <script src="js/members.js"></script>
+  <script src="js/shops.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
