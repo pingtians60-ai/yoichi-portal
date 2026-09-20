@@ -2,7 +2,7 @@
    夜市 (Yoichi) - Data Store & State Management (Event Shift Supported)
    ========================================================================== */
 
-const STORAGE_KEY = 'yoichi_org_portal_v9';
+const STORAGE_KEY = 'yoichi_org_portal_v10';
 
 // GAS Web App URL 初期化
 let gasApiUrl = null;
@@ -162,35 +162,63 @@ class Store {
         }));
       }
 
-      // Sync staff
-      if (resData.staff) {
-        this.data.staffList = resData.staff.map(s => {
-          const existing = this.data.staffList.find(e => e.id === s.id);
-          
-          // プログラムの安全なマージ:
-          // 1. GASから有効なプログラムが返ってきた場合はそれを採用
-          // 2. GASからの値が未定義/空/「なし」で、ローカルに有効なプログラム値がある場合はローカル値を保護
-          let rawProg = s.program;
+      // Sync staff with safe non-destructive merge
+      if (resData.staff && Array.isArray(resData.staff)) {
+        const gasMap = new Map();
+        resData.staff.forEach(s => {
+          if (s.id) gasMap.set(s.id, s);
+          if (s.attendance_number !== undefined && s.attendance_number !== null && s.attendance_number !== '') {
+            gasMap.set(String(s.attendance_number).trim(), s);
+          }
+        });
+
+        // 1. ローカルのスタッフリストを更新（スプレッドシートにないメンバーも絶対に消さず保持！）
+        const mergedList = this.data.staffList.map(localStaff => {
+          const gasStaff = gasMap.get(localStaff.id) || gasMap.get(String(localStaff.attendance_number).trim());
+          if (!gasStaff) return localStaff; // スプレッドシートに未登録のメンバーはそのまま維持！
+
+          let rawProg = gasStaff.program;
           if (!rawProg || rawProg === 'なし') {
-            if (existing && existing.program && existing.program !== 'なし') {
-              rawProg = existing.program;
+            if (localStaff.program && localStaff.program !== 'なし') {
+              rawProg = localStaff.program;
             }
           }
           const progs = this.parseProgram(rawProg);
-          const finalProgram = progs.length > 0 ? progs.join(', ') : (existing && existing.program ? existing.program : 'なし');
+          const finalProgram = progs.length > 0 ? progs.join(', ') : (localStaff.program || 'なし');
 
           return {
-            id: s.id,
-            name: s.name,
-            category: s.category,
-            role: s.role,
-            avatar: s.avatar || s.name.charAt(0),
-            attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) 
-              ? String(s.attendance_number).trim() 
-              : (existing ? existing.attendance_number : ''),
+            id: localStaff.id,
+            name: gasStaff.name || localStaff.name,
+            category: gasStaff.category || localStaff.category,
+            role: gasStaff.role || localStaff.role,
+            avatar: gasStaff.avatar || localStaff.avatar || (localStaff.name ? localStaff.name.charAt(0) : '?'),
+            attendance_number: (gasStaff.attendance_number !== undefined && gasStaff.attendance_number !== null && gasStaff.attendance_number !== '')
+              ? String(gasStaff.attendance_number).trim()
+              : localStaff.attendance_number,
             program: finalProgram
           };
         });
+
+        // 2. GAS側に存在してローカル側にまだないメンバーがいれば追加
+        resData.staff.forEach(gasStaff => {
+          const exists = mergedList.some(l => 
+            l.id === gasStaff.id || (l.attendance_number && String(l.attendance_number).trim() === String(gasStaff.attendance_number).trim())
+          );
+          if (!exists) {
+            const progs = this.parseProgram(gasStaff.program);
+            mergedList.push({
+              id: gasStaff.id,
+              name: gasStaff.name,
+              category: gasStaff.category || 'Member',
+              role: gasStaff.role || 'staff',
+              avatar: gasStaff.avatar || (gasStaff.name ? gasStaff.name.charAt(0) : '?'),
+              attendance_number: (gasStaff.attendance_number !== undefined && gasStaff.attendance_number !== null) ? String(gasStaff.attendance_number).trim() : '',
+              program: progs.length > 0 ? progs.join(', ') : 'なし'
+            });
+          }
+        });
+
+        this.data.staffList = mergedList;
       }
 
       this.saveData();
