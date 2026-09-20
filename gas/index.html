@@ -5331,7 +5331,7 @@ const Utils = {
    夜市 (Yoichi) - Data Store & State Management (Event Shift Supported)
    ========================================================================== */
 
-const STORAGE_KEY = 'yoichi_org_portal_v8';
+const STORAGE_KEY = 'yoichi_org_portal_v9';
 
 // GAS Web App URL 初期化
 let gasApiUrl = null;
@@ -5751,42 +5751,1050 @@ class Store {
         { id: 'workshop', name: '勉強会・合宿・交流', class: 'event-category-training', color: '#a855f7' }
       ],
       staffList: [
-        {
-          id: 'u1',
-          name: '管理者',
-          role: 'manager',
-          category: 'Core',
-          avatar: '管',
-          attendance_number: '0138',
-          program: '夜市・朝市'
-        },
-        {
-          id: 'u_item_lgadwcfmu3wegw4',
-          name: '武市太陽',
-          role: 'manager',
-          category: 'Core',
-          avatar: '武',
-          attendance_number: '1626',
-          program: 'なし'
-        },
-        {
-          id: 'u_item_jbntbwvmu9ji5as',
-          name: '岡本あづき',
-          role: 'staff',
-          category: 'Member',
-          avatar: '岡',
-          attendance_number: '3220',
-          program: 'なし'
-        },
-        {
-          id: 'u_item_vn8a3ykmu9jiphx',
-          name: '森本香菜',
-          role: 'staff',
-          category: 'Assistant',
-          avatar: '森',
-          attendance_number: '3290',
-          program: 'なし'
-        }
+              {
+                      "id": "u1",
+                      "name": "管理者",
+                      "role": "manager",
+                      "category": "Core",
+                      "avatar": "管",
+                      "attendance_number": "0138",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_item_lgadwcfmu3wegw4",
+                      "name": "武市 太陽",
+                      "role": "manager",
+                      "category": "Core",
+                      "avatar": "武",
+                      "attendance_number": "1626",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_2022",
+                      "name": "池田 奈央",
+                      "role": "manager",
+                      "category": "Core",
+                      "avatar": "池",
+                      "attendance_number": "2022",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_2711",
+                      "name": "松村 瞳",
+                      "role": "manager",
+                      "category": "Core",
+                      "avatar": "松",
+                      "attendance_number": "2711",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_2810",
+                      "name": "馬頭 遼太朗",
+                      "role": "staff",
+                      "category": "Assistant",
+                      "avatar": "馬",
+                      "attendance_number": "2810",
+                      "program": "TAKE ACTION"
+              },
+              {
+                      "id": "u_item_jbntbwvmu9ji5as",
+                      "name": "岡本 あづき",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "岡",
+                      "attendance_number": "3220",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_item_vn8a3ykmu9jiphx",
+                      "name": "森本 香菜",
+                      "role": "staff",
+                      "category": "Assistant",
+                      "avatar": "森",
+                      "attendance_number": "3290",
+                      "program": "FIZZ, 夜市・朝市"
+              },
+              {
+                      "id": "u_3318",
+                      "name": "野田 華妃",
+                      "role": "staff",
+                      "category": "Chief",
+                      "avatar": "野",
+                      "attendance_number": "3318",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_3451",
+                      "name": "横井 亮哉",
+                      "role": "manager",
+                      "category": "Assistant",
+                      "avatar": "横",
+                      "attendance_number": "3451",
+                      "program": "TAKE ACTION"
+              },
+              {
+                      "id": "u_3486",
+                      "name": "遠藤 愛佳",
+                      "role": "staff",
+                      "category": "Chief",
+                      "avatar": "遠",
+                      "attendance_number": "3486",
+                      "program": "TAKE ACTION, FIZZ"
+              },
+              {
+                      "id": "u_3515",
+                      "name": "川邉 翔太",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "川",
+                      "attendance_number": "3515",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_3667",
+                      "name": "桑島 野乃叶",
+                      "role": "staff",
+                      "category": "Chief",
+                      "avatar": "桑",
+                      "attendance_number": "3667",
+                      "program": "TAKE ACTION"
+              },
+              {
+                      "id": "u_3827",
+                      "name": "井上 彩音",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "井",
+                      "attendance_number": "3827",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_3929",
+                      "name": "池田 晃士",
+                      "role": "staff",
+                      "category": "Assistant",
+                      "avatar": "池",
+                      "attendance_number": "3929",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4001",
+                      "name": "笹江恋太朗",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "笹",
+                      "attendance_number": "4001",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4002",
+                      "name": "中村悠大",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "中",
+                      "attendance_number": "4002",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4003",
+                      "name": "中内悠貴",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "中",
+                      "attendance_number": "4003",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4004",
+                      "name": "古田子昂",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "古",
+                      "attendance_number": "4004",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4005",
+                      "name": "中原瑛太",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "中",
+                      "attendance_number": "4005",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4006",
+                      "name": "山下葵衣",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "山",
+                      "attendance_number": "4006",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_4007",
+                      "name": "宮嶋心愛",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "宮",
+                      "attendance_number": "4007",
+                      "program": "夜市・朝市, マーケティング, 総務"
+              },
+              {
+                      "id": "u_4008",
+                      "name": "平田修大",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "平",
+                      "attendance_number": "4008",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4009",
+                      "name": "濁池夢斗",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "濁",
+                      "attendance_number": "4009",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4010",
+                      "name": "松田篤樹",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "松",
+                      "attendance_number": "4010",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4011",
+                      "name": "大上航正",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "大",
+                      "attendance_number": "4011",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4012",
+                      "name": "岡嶋尚志",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "岡",
+                      "attendance_number": "4012",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4013",
+                      "name": "田中美帆",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "田",
+                      "attendance_number": "4013",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4014",
+                      "name": "足助祐美",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "足",
+                      "attendance_number": "4014",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4015",
+                      "name": "西城裕陽",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "西",
+                      "attendance_number": "4015",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4016",
+                      "name": "二又佑妃",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "二",
+                      "attendance_number": "4016",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4017",
+                      "name": "長井咲奈",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "長",
+                      "attendance_number": "4017",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_4018",
+                      "name": "林美緒",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "林",
+                      "attendance_number": "4018",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_4019",
+                      "name": "太田陵月",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "太",
+                      "attendance_number": "4019",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4020",
+                      "name": "前岩丈琉",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "前",
+                      "attendance_number": "4020",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4021",
+                      "name": "北角優空",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "北",
+                      "attendance_number": "4021",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4022",
+                      "name": "原田実怜",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "原",
+                      "attendance_number": "4022",
+                      "program": "FIZZ, マーケティング, 総務"
+              },
+              {
+                      "id": "u_4023",
+                      "name": "西山桃代",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "西",
+                      "attendance_number": "4023",
+                      "program": "TAKE ACTION"
+              },
+              {
+                      "id": "u_4024",
+                      "name": "松井能",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "松",
+                      "attendance_number": "4024",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4025",
+                      "name": "山﨑 菜結",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "山",
+                      "attendance_number": "4025",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4026",
+                      "name": "井上那月",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "井",
+                      "attendance_number": "4026",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4027",
+                      "name": "北井千景",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "北",
+                      "attendance_number": "4027",
+                      "program": "マーケティング, 総務"
+              },
+              {
+                      "id": "u_4028",
+                      "name": "加藤誠一朗",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "加",
+                      "attendance_number": "4028",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_4029",
+                      "name": "市川秦",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "市",
+                      "attendance_number": "4029",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4030",
+                      "name": "杉山慶浩",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "杉",
+                      "attendance_number": "4030",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4031",
+                      "name": "梅谷芙実",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "梅",
+                      "attendance_number": "4031",
+                      "program": "TAKE ACTION"
+              },
+              {
+                      "id": "u_4032",
+                      "name": "田内芽希",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "田",
+                      "attendance_number": "4032",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4033",
+                      "name": "藤井優",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "藤",
+                      "attendance_number": "4033",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4036",
+                      "name": "赤松凛々子",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "赤",
+                      "attendance_number": "4036",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4037",
+                      "name": "中西希花",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "中",
+                      "attendance_number": "4037",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4038",
+                      "name": "真鍋瑞葉",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "真",
+                      "attendance_number": "4038",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4039",
+                      "name": "矢木陽太",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "矢",
+                      "attendance_number": "4039",
+                      "program": "TAKE ACTION"
+              },
+              {
+                      "id": "u_4040",
+                      "name": "中井捷馬",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "中",
+                      "attendance_number": "4040",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4041",
+                      "name": "長知純",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "長",
+                      "attendance_number": "4041",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4042",
+                      "name": "高木桜",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "高",
+                      "attendance_number": "4042",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4043",
+                      "name": "村田遥風",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "村",
+                      "attendance_number": "4043",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4044",
+                      "name": "平野里帆",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "平",
+                      "attendance_number": "4044",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4045",
+                      "name": "九鬼杏奈",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "九",
+                      "attendance_number": "4045",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4046",
+                      "name": "坂田翔",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "坂",
+                      "attendance_number": "4046",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4047",
+                      "name": "上治亮太",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "上",
+                      "attendance_number": "4047",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4048",
+                      "name": "金子巧",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "金",
+                      "attendance_number": "4048",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4049",
+                      "name": "小西乃慈",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "小",
+                      "attendance_number": "4049",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4050",
+                      "name": "島田悠杜",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "島",
+                      "attendance_number": "4050",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4051",
+                      "name": "小川直寛",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "小",
+                      "attendance_number": "4051",
+                      "program": "TAKE ACTION, マーケティング, 総務"
+              },
+              {
+                      "id": "u_4052",
+                      "name": "島田梨帆",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "島",
+                      "attendance_number": "4052",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4054",
+                      "name": "樋浦佳乃子",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "樋",
+                      "attendance_number": "4054",
+                      "program": "夜市・朝市, マーケティング, 総務"
+              },
+              {
+                      "id": "u_4055",
+                      "name": "井上晴菜",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "井",
+                      "attendance_number": "4055",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4056",
+                      "name": "北川陽道",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "北",
+                      "attendance_number": "4056",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4057",
+                      "name": "仙田あかり",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "仙",
+                      "attendance_number": "4057",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4059",
+                      "name": "市川璃博",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "市",
+                      "attendance_number": "4059",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4060",
+                      "name": "岩本智佳",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "岩",
+                      "attendance_number": "4060",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4061",
+                      "name": "伊藤大智",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "伊",
+                      "attendance_number": "4061",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_4062",
+                      "name": "杉山直太郎",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "杉",
+                      "attendance_number": "4062",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4063",
+                      "name": "西本光伶",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "西",
+                      "attendance_number": "4063",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4064",
+                      "name": "西村羽叶",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "西",
+                      "attendance_number": "4064",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4065",
+                      "name": "福本莉央",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "福",
+                      "attendance_number": "4065",
+                      "program": "FIZZ"
+              },
+              {
+                      "id": "u_4066",
+                      "name": "石田彩乃",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "石",
+                      "attendance_number": "4066",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4067",
+                      "name": "山川結衣",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "山",
+                      "attendance_number": "4067",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4068",
+                      "name": "濱田かんな",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "濱",
+                      "attendance_number": "4068",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4069",
+                      "name": "熊谷心花",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "熊",
+                      "attendance_number": "4069",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4070",
+                      "name": "梶浦朔",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "梶",
+                      "attendance_number": "4070",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4071",
+                      "name": "木上眞",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "木",
+                      "attendance_number": "4071",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4072",
+                      "name": "木下蓮人",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "木",
+                      "attendance_number": "4072",
+                      "program": "マーケティング, 総務"
+              },
+              {
+                      "id": "u_4073",
+                      "name": "久保山愛子",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "久",
+                      "attendance_number": "4073",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4074",
+                      "name": "由利優芽",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "由",
+                      "attendance_number": "4074",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4075",
+                      "name": "佐藤昴",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "佐",
+                      "attendance_number": "4075",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4076",
+                      "name": "堀内桃花",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "堀",
+                      "attendance_number": "4076",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4078",
+                      "name": "河野莉々",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "河",
+                      "attendance_number": "4078",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4079",
+                      "name": "車谷美琴",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "車",
+                      "attendance_number": "4079",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4080",
+                      "name": "火浦生真",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "火",
+                      "attendance_number": "4080",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4081",
+                      "name": "山川夢加",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "山",
+                      "attendance_number": "4081",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4082",
+                      "name": "川田稜眞",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "川",
+                      "attendance_number": "4082",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4083",
+                      "name": "岡さくら",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "岡",
+                      "attendance_number": "4083",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4084",
+                      "name": "柏木里奈",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "柏",
+                      "attendance_number": "4084",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4085",
+                      "name": "岡本奈々",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "岡",
+                      "attendance_number": "4085",
+                      "program": "夜市・朝市, TAKE ACTION, マーケティング, 総務"
+              },
+              {
+                      "id": "u_4086",
+                      "name": "浅野詞音",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "浅",
+                      "attendance_number": "4086",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4087",
+                      "name": "松岡利通",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "松",
+                      "attendance_number": "4087",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4088",
+                      "name": "神谷美緒",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "神",
+                      "attendance_number": "4088",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4089",
+                      "name": "井町晴歩",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "井",
+                      "attendance_number": "4089",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4090",
+                      "name": "市村伊純",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "市",
+                      "attendance_number": "4090",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4091",
+                      "name": "帯谷遥弥",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "帯",
+                      "attendance_number": "4091",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4092",
+                      "name": "竹嶋晴",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "竹",
+                      "attendance_number": "4092",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4093",
+                      "name": "木村温音",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "木",
+                      "attendance_number": "4093",
+                      "program": "夜市・朝市"
+              },
+              {
+                      "id": "u_4094",
+                      "name": "藤本吏穂",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "藤",
+                      "attendance_number": "4094",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4095",
+                      "name": "室峰万由奈",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "室",
+                      "attendance_number": "4095",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4096",
+                      "name": "岩佐篤志",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "岩",
+                      "attendance_number": "4096",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4097",
+                      "name": "川崎晄希",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "川",
+                      "attendance_number": "4097",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4098",
+                      "name": "児島有祐",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "児",
+                      "attendance_number": "4098",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4099",
+                      "name": "寺坂匠平",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "寺",
+                      "attendance_number": "4099",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4100",
+                      "name": "三河とわ",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "三",
+                      "attendance_number": "4100",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4101",
+                      "name": "川上真翔",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "川",
+                      "attendance_number": "4101",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4102",
+                      "name": "森陽菜",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "森",
+                      "attendance_number": "4102",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4103",
+                      "name": "中山真夢",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "中",
+                      "attendance_number": "4103",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4104",
+                      "name": "石崎そう",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "石",
+                      "attendance_number": "4104",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4105",
+                      "name": "古本絢乃",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "古",
+                      "attendance_number": "4105",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4106",
+                      "name": "齋藤たまき",
+                      "role": "staff",
+                      "category": "Beginner",
+                      "avatar": "齋",
+                      "attendance_number": "4106",
+                      "program": "なし"
+              },
+              {
+                      "id": "u_4999",
+                      "name": "武市 力",
+                      "role": "staff",
+                      "category": "Member",
+                      "avatar": "武",
+                      "attendance_number": "4999",
+                      "program": "TAKE ACTION"
+              }
       ],
       events: [
         {
