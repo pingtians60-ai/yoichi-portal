@@ -5331,7 +5331,7 @@ const Utils = {
    夜市 (Yoichi) - Data Store & State Management (Event Shift Supported)
    ========================================================================== */
 
-const STORAGE_KEY = 'yoichi_org_portal_v7';
+const STORAGE_KEY = 'yoichi_org_portal_v8';
 
 // GAS Web App URL 初期化
 let gasApiUrl = null;
@@ -5531,38 +5531,27 @@ class Store {
             .withFailureHandler(reject)
             .apiPostAction(action, data);
         });
-        if (res && res.error) throw new Error(res.error);
         return res;
       } else if (gasApiUrl) {
         const response = await fetch(gasApiUrl, {
           method: 'POST',
-          mode: 'cors',
           headers: {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain;charset=utf-8'
           },
           body: JSON.stringify({ action, data })
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const res = await response.json();
-        if (res.error) throw new Error(res.error);
-        return res;
+        return await response.json();
       }
     } catch (e) {
-      console.error(`Failed to post action ${action} to GAS:`, e);
-      if (typeof Utils !== 'undefined' && Utils.showToast) {
-        Utils.showToast(`同期エラー: ${e.message}`, 'error');
-      }
+      console.error(`Failed to post action [${action}] to GAS:`, e);
+      return { error: e.toString() };
     }
   }
 
   async initSupabase() {
-    if (!supabaseClient) {
-      console.log('Supabase is not configured. Running in LocalStorage-only mode.');
-      return;
-    }
-    // 初回データフェッチ
+    console.log('Initializing Supabase sync...');
     await this.fetchFromSupabase();
-    // リアルタイム同期開始
     this.subscribeToSupabase();
   }
 
@@ -5576,56 +5565,60 @@ class Store {
         supabaseClient.from('yoichi_staff').select('*')
       ]);
 
-      if (eventsRes.error) throw eventsRes.error;
-      if (shiftsRes.error) throw shiftsRes.error;
-      if (shopsRes.error) throw shopsRes.error;
-      if (staffRes.error) throw staffRes.error;
+      if (eventsRes.data) {
+        this.data.events = eventsRes.data.map(e => ({
+          id: e.id,
+          title: e.title,
+          category: e.category,
+          date: e.date,
+          startTime: e.startTime,
+          endTime: e.endTime,
+          allDay: Boolean(e.allDay),
+          members: this.parseMembers(e.members),
+          notes: e.notes || ''
+        }));
+      }
 
-      // ローカルデータを同期的に更新
-      this.data.events = eventsRes.data.map(e => ({
-        id: e.id,
-        title: e.title,
-        category: e.category,
-        date: e.date,
-        startTime: e.startTime,
-        endTime: e.endTime,
-        allDay: e.allDay,
-        members: e.members || [],
-        notes: e.notes
-      }));
+      if (shiftsRes.data) {
+        const shiftsMap = {};
+        shiftsRes.data.forEach(s => {
+          shiftsMap[s.event_id] = {
+            roles: typeof s.roles === 'string' ? JSON.parse(s.roles) : s.roles,
+            timeSlots: typeof s.timeSlots === 'string' ? JSON.parse(s.timeSlots) : s.timeSlots,
+            assignments: typeof s.assignments === 'string' ? JSON.parse(s.assignments) : s.assignments
+          };
+        });
+        this.data.eventShifts = shiftsMap;
+      }
 
-      const shiftsMap = {};
-      shiftsRes.data.forEach(s => {
-        shiftsMap[s.event_id] = {
-          roles: s.roles,
-          timeSlots: s.timeSlots,
-          assignments: s.assignments || {}
-        };
-      });
-      this.data.eventShifts = shiftsMap;
-
-      this.data.shopList = shopsRes.data.map(s => ({
-        id: s.id,
-        name: s.name,
-        category: s.category,
-        eventName: s.eventName,
-        eventDate: s.eventDate || s.event_date || '',
-        contact: s.contact,
-        desc: s.desc
-      }));
-
-      this.data.staffList = staffRes.data.map(s => {
-        const progs = this.parseProgram(s.program);
-        return {
+      if (shopsRes.data) {
+        this.data.shopList = shopsRes.data.map(s => ({
           id: s.id,
           name: s.name,
           category: s.category,
-          role: s.role,
-          avatar: s.avatar,
-          attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) ? String(s.attendance_number).trim() : (s.attendanceNo !== undefined && s.attendanceNo !== null ? String(s.attendanceNo).trim() : ''),
-          program: progs.length > 0 ? progs.join(', ') : 'なし'
-        };
-      });
+          eventName: s.eventName,
+          eventDate: s.eventDate || '',
+          contact: s.contact || '',
+          desc: s.desc || '',
+          email: s.email || '',
+          phone: s.phone || ''
+        }));
+      }
+
+      if (staffRes.data) {
+        this.data.staffList = staffRes.data.map(s => {
+          const progs = this.parseProgram(s.program);
+          return {
+            id: s.id,
+            name: s.name,
+            category: s.category,
+            role: s.role,
+            avatar: s.avatar || s.name.charAt(0),
+            attendance_number: (s.attendance_number !== undefined && s.attendance_number !== null) ? String(s.attendance_number).trim() : '',
+            program: progs.length > 0 ? progs.join(', ') : 'なし'
+          };
+        });
+      }
 
       this.saveData();
       console.log('Successfully fetched and synchronized data from Supabase.');
@@ -5637,18 +5630,22 @@ class Store {
   subscribeToSupabase() {
     if (!supabaseClient) return;
 
-    // スケジュールイベントの同期
+    // スケジュールの同期
     supabaseClient
       .channel('public:yoichi_events')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'yoichi_events' }, payload => {
         const { eventType, new: newRow, old: oldRow } = payload;
         if (eventType === 'INSERT') {
           if (!this.data.events.some(e => e.id === newRow.id)) {
+            newRow.members = this.parseMembers(newRow.members);
             this.data.events.push(newRow);
           }
         } else if (eventType === 'UPDATE') {
           const idx = this.data.events.findIndex(e => e.id === newRow.id);
-          if (idx !== -1) this.data.events[idx] = newRow;
+          if (idx !== -1) {
+            newRow.members = this.parseMembers(newRow.members);
+            this.data.events[idx] = newRow;
+          }
         } else if (eventType === 'DELETE') {
           this.data.events = this.data.events.filter(e => e.id !== oldRow.id);
         }
@@ -5661,12 +5658,11 @@ class Store {
       .channel('public:yoichi_shifts')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'yoichi_shifts' }, payload => {
         const { eventType, new: newRow, old: oldRow } = payload;
-        if (!this.data.eventShifts) this.data.eventShifts = {};
         if (eventType === 'INSERT' || eventType === 'UPDATE') {
           this.data.eventShifts[newRow.event_id] = {
-            roles: newRow.roles,
-            timeSlots: newRow.timeSlots,
-            assignments: newRow.assignments || {}
+            roles: typeof newRow.roles === 'string' ? JSON.parse(newRow.roles) : newRow.roles,
+            timeSlots: typeof newRow.timeSlots === 'string' ? JSON.parse(newRow.timeSlots) : newRow.timeSlots,
+            assignments: typeof newRow.assignments === 'string' ? JSON.parse(newRow.assignments) : newRow.assignments
           };
         } else if (eventType === 'DELETE') {
           delete this.data.eventShifts[oldRow.event_id];
@@ -5739,6 +5735,33 @@ class Store {
           avatar: '管',
           attendance_number: '0138',
           program: '夜市・朝市'
+        },
+        {
+          id: 'u_item_lgadwcfmu3wegw4',
+          name: '武市太陽',
+          role: 'manager',
+          category: 'Core',
+          avatar: '武',
+          attendance_number: '1626',
+          program: 'なし'
+        },
+        {
+          id: 'u_item_jbntbwvmu9ji5as',
+          name: '岡本あづき',
+          role: 'staff',
+          category: 'Member',
+          avatar: '岡',
+          attendance_number: '3220',
+          program: 'なし'
+        },
+        {
+          id: 'u_item_vn8a3ykmu9jiphx',
+          name: '森本香菜',
+          role: 'staff',
+          category: 'Assistant',
+          avatar: '森',
+          attendance_number: '3290',
+          program: 'なし'
         }
       ],
       events: [
